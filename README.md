@@ -19,6 +19,7 @@ Sistema informatizado para gerenciamento de casas de leilões, desenvolvido para
 
 ## 📦 Estrutura do Projeto
 LeiloesTDSat/
+
 ├── src/ # Código fonte
 ├── nbproject/ # Configurações do NetBeans
 ├── build.xml # Script de build Ant
@@ -29,7 +30,7 @@ LeiloesTDSat/
 O projeto utiliza MySQL. Execute o script SQL para criar as tabelas necessárias.
 
 ## 👥 Autor
-- [Seu Nome] - Desenvolvimento inicial
+- William Wieser - Desenvolvimento inicial
 
 ## 📄 Licença
 Este projeto está sob a licença MIT.
