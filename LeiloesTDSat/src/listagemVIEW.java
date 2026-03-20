@@ -1,7 +1,7 @@
 
-import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
-
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
@@ -201,25 +201,38 @@ public class listagemVIEW extends javax.swing.JFrame {
     private javax.swing.JTable listaProdutos;
     // End of variables declaration//GEN-END:variables
 
-    private void listarProdutos(){
-        try {
-            ProdutosDAO produtosdao = new ProdutosDAO();
-            
-            DefaultTableModel model = (DefaultTableModel) listaProdutos.getModel();
-            model.setNumRows(0);
-            
-            ArrayList<ProdutosDTO> listagem = produtosdao.listarProdutos();
-            
-            for(int i = 0; i < listagem.size(); i++){
-                model.addRow(new Object[]{
-                    listagem.get(i).getId(),
-                    listagem.get(i).getNome(),
-                    listagem.get(i).getValor(),
-                    listagem.get(i).getStatus()
-                });
-            }
-        } catch (Exception e) {
+   private void listarProdutos(){
+    try {
+        ProdutosDAO produtosdao = new ProdutosDAO();
+        
+        // Mensagem 1: Vai tentar listar
+        System.out.println("Tentando listar produtos...");
+        
+        ArrayList<ProdutosDTO> listagem = produtosdao.listarProdutos();
+        
+        // Mensagem 2: Quantidade encontrada
+        System.out.println("Produtos encontrados: " + listagem.size());
+        
+        DefaultTableModel model = (DefaultTableModel) listaProdutos.getModel();
+        model.setNumRows(0);
+        
+        for(int i = 0; i < listagem.size(); i++){
+            System.out.println("Adicionando: " + listagem.get(i).getNome()); // Mensagem 3
+            model.addRow(new Object[]{
+                listagem.get(i).getId(),
+                listagem.get(i).getNome(),
+                listagem.get(i).getValor(),
+                listagem.get(i).getStatus()
+            });
         }
-    
+        
+        if(listagem.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Nenhum produto cadastrado!");
+        }
+        
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(this, "Erro ao listar: " + e.getMessage());
+        e.printStackTrace();
     }
+}
 }
