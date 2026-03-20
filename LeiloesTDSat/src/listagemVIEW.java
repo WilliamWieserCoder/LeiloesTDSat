@@ -136,12 +136,38 @@ public class listagemVIEW extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnVenderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVenderActionPerformed
-        String id = id_produto_venda.getText();
+    String idTexto = id_produto_venda.getText();
+    
+    // Validação: campo não pode estar vazio
+    if (idTexto.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Digite o ID do produto para vender!", "Atenção", JOptionPane.WARNING_MESSAGE);
+        return;
+    }
+    
+    try {
+        int id = Integer.parseInt(idTexto);
         
-        ProdutosDAO produtosdao = new ProdutosDAO();
+        // Confirmar venda
+        int confirm = JOptionPane.showConfirmDialog(this, 
+            "Tem certeza que deseja vender o produto ID: " + id + "?",
+            "Confirmar Venda",
+            JOptionPane.YES_NO_OPTION);
         
-        //produtosdao.venderProduto(Integer.parseInt(id));
-        listarProdutos();
+        if (confirm == JOptionPane.YES_OPTION) {
+            ProdutosDAO produtosdao = new ProdutosDAO();
+            produtosdao.venderProduto(id);
+            
+            // Atualizar a lista
+            listarProdutos();
+            
+            // Limpar campo
+            id_produto_venda.setText("");
+        }
+        
+    } catch (NumberFormatException e) {
+        JOptionPane.showMessageDialog(this, "ID inválido! Digite apenas números.", "Erro", JOptionPane.ERROR_MESSAGE);
+    }
+
     }//GEN-LAST:event_btnVenderActionPerformed
 
     private void btnVendasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVendasActionPerformed
